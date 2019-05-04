@@ -2,6 +2,7 @@ package edu.upc.dsa.escaperoomapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -9,10 +10,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.internal.EverythingIsNonNull;
+
 public class LoginActivity extends AppCompatActivity {
 
-    TextView txtUsername;
-    TextView txtPassword;
+    private AuthApi authApi;
+    private TextView txtUsername;
+    private TextView txtPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +46,22 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(listenerBtnLogIn);
 
+        Gson gson = new GsonBuilder().create();
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://my-json-server.typicode.com/eperezcosano/JSON-server/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build();
+
+        authApi = retrofit.create(AuthApi.class);
+
     }
 
     private View.OnClickListener listenerBtnLogIn = new View.OnClickListener() {
@@ -42,10 +74,34 @@ public class LoginActivity extends AppCompatActivity {
             if (username.isEmpty() || password.isEmpty())
                 Toast.makeText(LoginActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
             else {
-                //
+                User user = new User(0, username, password);
+                login(user);
             }
 
         }
     };
+
+    private void login(User user) {
+
+        Call<User> call = authApi.login(user);
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("Code", Integer.toString(response.code()));
+                    return;
+                }
+
+                Log.v("Response", response.body().toString());
+
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("Throwable", t.getMessage());
+            }
+        });
+    }
 
 }
