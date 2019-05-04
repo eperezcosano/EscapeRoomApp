@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">EscapeRoomApp</string>
+    <string name="castledragon">CastleDragon</string>
+    <string name="escape_n_room">Escape\nRoom</string>
+    <string name="register">Register</string>
+    <string name="log_in">Log In</string>
 </resources>
