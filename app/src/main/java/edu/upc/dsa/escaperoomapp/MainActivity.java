@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        //Intent svc=new Intent(this, BackgroundSoundService.class);
-        //startService(svc);
+        Intent svc=new Intent(this, BackgroundSoundService.class);
+        startService(svc);
 
         Button btnLogIn = findViewById(R.id.btnLogIn);
         Button btnReg = findViewById(R.id.btnReg);
