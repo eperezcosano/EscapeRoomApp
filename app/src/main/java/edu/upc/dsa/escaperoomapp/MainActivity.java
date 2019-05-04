@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        //Intent svc=new Intent(this, BackgroundSoundService.class);
+        //startService(svc);
+
         Button btnLogIn = findViewById(R.id.btnLogIn);
         Button btnReg = findViewById(R.id.btnReg);
 
@@ -41,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener listenerBtnLogIn = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            setContentView(R.layout.activity_login);
+            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(loginIntent);
         }
     };
 }
