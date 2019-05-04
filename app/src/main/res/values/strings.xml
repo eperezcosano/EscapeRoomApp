@@ -4,4 +4,6 @@
     <string name="escape_n_room">Escape\nRoom</string>
     <string name="register">Register</string>
     <string name="log_in">Log In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>

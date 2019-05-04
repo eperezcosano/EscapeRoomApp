@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnReg = findViewById(R.id.btnReg);
 
         btnReg.setOnClickListener(listenerBtnReg);
+        btnLogIn.setOnClickListener(listenerBtnLogIn);
 
     }
 
@@ -34,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://www.google.com"));
             startActivity(browserIntent);
+        }
+    };
+
+    private View.OnClickListener listenerBtnLogIn = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            setContentView(R.layout.activity_login);
         }
     };
 }
