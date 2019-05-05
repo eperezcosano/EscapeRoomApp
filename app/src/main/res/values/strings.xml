@@ -9,4 +9,6 @@
     <string name="play">Play</string>
     <string name="shop">Shop</string>
     <string name="inventory">Inventory</string>
+    <string name="imageoctocat">imageOctocat</string>
+    <string name="imagebubble">imageBubble</string>
 </resources>

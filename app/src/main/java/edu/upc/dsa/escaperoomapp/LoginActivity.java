@@ -1,5 +1,6 @@
 package edu.upc.dsa.escaperoomapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -73,7 +74,12 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
             else {
                 User user = new User(0, username, password);
-                login(user);
+                //login(user);
+                Intent intent = new Intent(getApplicationContext(), SignedinActivity.class);
+                intent.putExtra("id", user.getId());
+                intent.putExtra("username", user.getUsername());
+                intent.putExtra("password", user.getPassword());
+                startActivity(intent);
             }
 
         }
