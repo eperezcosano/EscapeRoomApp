@@ -6,4 +6,7 @@
     <string name="log_in">Log In</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="play">Play</string>
+    <string name="shop">Shop</string>
+    <string name="inventory">Inventory</string>
 </resources>

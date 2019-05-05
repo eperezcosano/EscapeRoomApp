@@ -13,8 +13,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -86,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         Call<User> call = authApi.login(user);
 
         call.enqueue(new Callback<User>() {
+            @EverythingIsNonNull
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
@@ -94,6 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 Log.v("Response", response.body().toString());
+                //if (response.isSuccessful())
+                    //Open Session
+                //if (response.code() == )
+
 
             }
             @EverythingIsNonNull
