@@ -1,10 +1,12 @@
 package edu.upc.dsa.escaperoomapp;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class SignedinActivity extends AppCompatActivity {
 
@@ -20,8 +22,14 @@ public class SignedinActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_signedin);
 
+        TextView txtUsername = findViewById(R.id.txtUsername);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/8bit16.ttf");
+        txtUsername.setTypeface(custom_font);
+
         Intent intent = getIntent();
         user = new User(intent.getIntExtra("id", 0), intent.getStringExtra("username"), intent.getStringExtra("password"));
+
+        txtUsername.setText(user.getUsername().concat("!"));
 
     }
 }

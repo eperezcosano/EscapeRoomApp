@@ -72,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
             if (username.isEmpty() || password.isEmpty())
                 Toast.makeText(LoginActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+            else if (username.length() > 7) //TODO Register
+                Toast.makeText(LoginActivity.this, "Username must be 7 characters maximum", Toast.LENGTH_SHORT).show();
             else {
                 User user = new User(0, username, password);
                 //login(user);

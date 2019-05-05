@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".SignedinActivity"></activity>
         <service android:enabled="true" android:name=".BackgroundSoundService" android:stopWithTask="true"/>
         <meta-data
             android:name="preloaded_fonts"
