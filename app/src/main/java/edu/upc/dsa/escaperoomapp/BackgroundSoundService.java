@@ -4,50 +4,38 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 
 public class BackgroundSoundService extends Service {
-    private static final String TAG = null;
-    MediaPlayer player;
-    public IBinder onBind(Intent arg0) {
 
-        return null;
-    }
+    private MediaPlayer player;
+
+    @Nullable
     @Override
-    public void onCreate() {
-        super.onCreate();
-        player = MediaPlayer.create(this, R.raw.background);
-        player.setLooping(true); // Set looping
-        player.setVolume(100,100);
-
-    }
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        player.start();
-        return 1;
-    }
-
-    public void onStart(Intent intent, int startId) {
-        // TO DO
-    }
-    public IBinder onUnBind(Intent arg0) {
-        // TO DO Auto-generated method
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
-    public void onStop() {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //getting systems default ringtone
+        player = MediaPlayer.create(this, R.raw.background);
+        //setting loop play to true
+        //this will make the ringtone continuously playing
+        player.setLooping(true);
+        player.setVolume(100,100);
+        //staring the player
+        player.start();
 
+        //we have some options for service
+        //start sticky means service will be explicity started and stopped
+        return START_STICKY;
     }
 
-    public void onPause() {
-        player.stop();
-    }
     @Override
     public void onDestroy() {
+        super.onDestroy();
+        //stopping the player when service is destroyed
         player.stop();
-        player.release();
-    }
-
-    @Override
-    public void onLowMemory() {
-
     }
 }

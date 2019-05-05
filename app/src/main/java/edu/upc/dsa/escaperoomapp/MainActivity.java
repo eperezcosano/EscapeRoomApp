@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Intent musicService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Intent svc=new Intent(this, BackgroundSoundService.class);
-        startService(svc);
+        musicService = new Intent(this, BackgroundSoundService.class);
+        startService(musicService);
 
         Button btnLogIn = findViewById(R.id.btnLogIn);
         Button btnReg = findViewById(R.id.btnReg);
@@ -48,4 +51,18 @@ public class MainActivity extends AppCompatActivity {
             startActivity(loginIntent);
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopService(musicService);
+        Log.d("SERVICE", "onBackPressed called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(musicService);
+        Log.d("SERVICE", "onDestroy called");
+    }
 }
