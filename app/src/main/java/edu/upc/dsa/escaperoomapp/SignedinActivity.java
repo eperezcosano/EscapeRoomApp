@@ -84,8 +84,9 @@ public class SignedinActivity extends AppCompatActivity {
     private View.OnClickListener listenerBtnInventory = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Intent inventoryIntent = new Intent(getApplicationContext(), )
-            //startActivity(inventoryIntent);
+            Intent inventoryIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+            //getUser info
+            startActivity(inventoryIntent);
         }
     };
 }
