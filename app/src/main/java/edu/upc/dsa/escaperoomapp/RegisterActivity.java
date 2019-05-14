@@ -1,7 +1,7 @@
 package edu.upc.dsa.escaperoomapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -32,8 +32,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("TEST", "created");
         //Full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -47,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         txtPassword2 = findViewById(R.id.txtPassword2);
 
         //Button listener
-        Button btnReg = findViewById(R.id.btnReg);
+        Button btnReg = findViewById(R.id.btnReg2);
         btnReg.setOnClickListener(listenerBtnReg);
 
         //Api connection
@@ -75,13 +76,15 @@ public class RegisterActivity extends AppCompatActivity {
             String password2 = txtPassword2.getText().toString();
 
             //Format checking
-            if (username.length() > 7)
+            if (username.isEmpty() || password.isEmpty() || password2.isEmpty())
+                Toast.makeText(RegisterActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+            else if (username.length() > 7)
                 Toast.makeText(RegisterActivity.this, "Username must be 7 characters maximum", Toast.LENGTH_SHORT).show();
             else if (!password.equals(password2))
                 Toast.makeText(RegisterActivity.this, "Password does not match!", Toast.LENGTH_SHORT).show();
             else {
                 //Api post user
-                User user = new User(0, username, password);
+                User user = new User("0", username, password);
                 register(user);
             }
         }
@@ -89,22 +92,26 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register(User user) {
 
-        Call<User> call = authApi.login(user);
+        Call<User> call = authApi.register(user);
         call.enqueue(new Callback<User>() {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("Code", Integer.toString(response.code()));
-                    return;
+                switch (response.code()) {
+                    case 201: //TODO: cambiar a 200:
+                        Intent intent = new Intent(getApplicationContext(), SignedinActivity.class);
+                        intent.putExtra("id", response.body().getId());
+                        intent.putExtra("username", response.body().getUsername());
+                        intent.putExtra("password", response.body().getPassword());
+                        startActivity(intent);
+                        break;
+                    case 404:
+                        Toast.makeText(RegisterActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(RegisterActivity.this, "Unknown response", Toast.LENGTH_SHORT).show();
+                        break;
                 }
-
-                Log.v("Response", response.body().toString());
-                //if (response.isSuccessful())
-                //Open Session
-                //if (response.code() == )
-
-
             }
 
             @EverythingIsNonNull

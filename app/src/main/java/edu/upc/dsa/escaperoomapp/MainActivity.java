@@ -1,7 +1,6 @@
 package edu.upc.dsa.escaperoomapp;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener listenerBtnReg = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://www.google.com"));
-            startActivity(browserIntent);
+            Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(registerIntent);
         }
     };
 
@@ -59,10 +57,4 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SERVICE", "onBackPressed called");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopService(musicService);
-        Log.d("SERVICE", "onDestroy called");
-    }
 }

@@ -34,7 +34,8 @@ public class SignedinActivity extends AppCompatActivity {
 
         //Get user data
         Intent intent = getIntent();
-        user = new User(intent.getIntExtra("id", 0), intent.getStringExtra("username"), intent.getStringExtra("password"));
+        //TODO:cambiar id
+        user = new User( "0", intent.getStringExtra("username"), intent.getStringExtra("password"));
 
         txtUsername.setText(user.getUsername().concat("!"));
 

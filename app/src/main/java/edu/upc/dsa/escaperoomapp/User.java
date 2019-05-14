@@ -2,12 +2,20 @@ package edu.upc.dsa.escaperoomapp;
 
 class User {
 
-    private int id;
+    private String id;
+    //TODO: para cuando server mysql implementado private int id;
     private String username;
     private String password;
 
     public User() {}
 
+    public User(String id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    /*
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
@@ -19,6 +27,15 @@ class User {
     }
 
     public void setId(int id) {
+        this.id = id;
+    }
+*/
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 

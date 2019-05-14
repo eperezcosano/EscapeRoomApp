@@ -36,6 +36,6 @@ public class BackgroundSoundService extends Service {
     public void onDestroy() {
         super.onDestroy();
         //stopping the player when service is destroyed
-        player.stop();
+        if (player != null) player.stop();
     }
 }

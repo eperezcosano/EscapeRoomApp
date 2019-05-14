@@ -10,7 +10,10 @@ import retrofit2.http.Path;
 
 public interface AuthApi {
 
-    @POST("login")
+    @POST("users")//TODO: auth/login
     Call<User> login(@Body User user);
+
+    @POST("users")//TODO: auth/register
+    Call<User> register(@Body User user);
 
 }

@@ -75,13 +75,8 @@ public class LoginActivity extends AppCompatActivity {
             else if (username.length() > 7) //TODO Register
                 Toast.makeText(LoginActivity.this, "Username must be 7 characters maximum", Toast.LENGTH_SHORT).show();
             else {
-                User user = new User(0, username, password);
-                //login(user);
-                Intent intent = new Intent(getApplicationContext(), SignedinActivity.class);
-                intent.putExtra("id", user.getId());
-                intent.putExtra("username", user.getUsername());
-                intent.putExtra("password", user.getPassword());
-                startActivity(intent);
+                User user = new User("0", username, password);
+                login(user);
             }
 
         }
@@ -95,16 +90,22 @@ public class LoginActivity extends AppCompatActivity {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("Code", Integer.toString(response.code()));
-                    return;
+
+                switch (response.code()) {
+                    case 201: //TODO: cambiar a 200:
+                        Intent intent = new Intent(getApplicationContext(), SignedinActivity.class);
+                        intent.putExtra("id", response.body().getId());
+                        intent.putExtra("username", response.body().getUsername());
+                        intent.putExtra("password", response.body().getPassword());
+                        startActivity(intent);
+                        break;
+                    case 404:
+                        Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(LoginActivity.this, "Unknown response", Toast.LENGTH_SHORT).show();
+                        break;
                 }
-
-                Log.v("Response", response.body().toString());
-                //if (response.isSuccessful())
-                    //Open Session
-                //if (response.code() == )
-
 
             }
             @EverythingIsNonNull
