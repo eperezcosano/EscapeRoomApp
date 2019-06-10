@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import edu.upc.dsa.escaperoomapp.models.User;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -39,12 +40,14 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
+        //Fields
         txtUsername = findViewById(R.id.txtUsername);
         txtPassword = findViewById(R.id.txtPassword);
         Button btnLogin = findViewById(R.id.btnLogIn);
 
         btnLogin.setOnClickListener(listenerBtnLogIn);
 
+        //Api connection
         Gson gson = new GsonBuilder().create();
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -54,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://my-json-server.typicode.com/eperezcosano/JSON-server/")
+                .baseUrl("http://147.83.7.205:8080/dsaApp/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
@@ -72,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (username.isEmpty() || password.isEmpty())
                 Toast.makeText(LoginActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
-            else if (username.length() > 7) //TODO Register
+            else if (username.length() > 7)
                 Toast.makeText(LoginActivity.this, "Username must be 7 characters maximum", Toast.LENGTH_SHORT).show();
             else {
                 User user = new User("0", username, password);
@@ -92,9 +95,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
 
                 switch (response.code()) {
-                    case 201: //TODO: cambiar a 200:
+                    case 200:
                         Intent intent = new Intent(getApplicationContext(), SignedinActivity.class);
-                        intent.putExtra("id", response.body().getId());
                         intent.putExtra("username", response.body().getUsername());
                         intent.putExtra("password", response.body().getPassword());
                         startActivity(intent);
@@ -111,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
                 Log.e("Throwable", t.getMessage());
             }
         });

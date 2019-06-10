@@ -1,10 +1,12 @@
-package edu.upc.dsa.escaperoomapp;
+package edu.upc.dsa.escaperoomapp.services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+
+import edu.upc.dsa.escaperoomapp.R;
 
 public class BackgroundSoundService extends Service {
 

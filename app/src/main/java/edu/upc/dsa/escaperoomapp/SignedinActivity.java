@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import edu.upc.dsa.escaperoomapp.models.User;
+
 public class SignedinActivity extends AppCompatActivity {
 
     private User user;
@@ -35,7 +37,7 @@ public class SignedinActivity extends AppCompatActivity {
         //Get user data
         Intent intent = getIntent();
         //TODO:cambiar id
-        user = new User( "0", intent.getStringExtra("username"), intent.getStringExtra("password"));
+        user = new User( intent.getStringExtra("id"), intent.getStringExtra("username"), intent.getStringExtra("password"));
 
         txtUsername.setText(user.getUsername().concat("!"));
 
@@ -54,11 +56,14 @@ public class SignedinActivity extends AppCompatActivity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-                    //Yes button clicked
+                    //Continue
+                    //Launch unity
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
-                    //No button clicked
+                    //New game
+                    //Set player data in mysql to empty
+                    //Launch unity
                     break;
             }
         }
@@ -77,7 +82,7 @@ public class SignedinActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://www.google.com"));
+                    Uri.parse("http://147.83.7.205:8080/"));
             startActivity(browserIntent);
         }
     };

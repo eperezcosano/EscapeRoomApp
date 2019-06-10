@@ -9,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import edu.upc.dsa.escaperoomapp.services.BackgroundSoundService;
+
 public class MainActivity extends AppCompatActivity {
 
     private Intent musicService;
