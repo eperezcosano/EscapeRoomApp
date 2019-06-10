@@ -1,6 +1,7 @@
 package edu.upc.dsa.escaperoomapp;
 
 import android.content.Intent;
+import android.nfc.FormatException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,6 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView txtUsername;
     private TextView txtPassword;
     private TextView txtPassword2;
+    private TextView txtName;
+    private TextView txtSurname;
+    private TextView txtEmail;
+    private TextView intAge;
 
 
     @Override
@@ -46,6 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
         txtUsername = findViewById(R.id.txtUsername);
         txtPassword = findViewById(R.id.txtPassword);
         txtPassword2 = findViewById(R.id.txtPassword2);
+        txtName = findViewById(R.id.txtName);
+        txtSurname = findViewById(R.id.txtSurname);
+        txtEmail = findViewById(R.id.txtMail);
+        intAge = findViewById(R.id.intAge);
 
         //Button listener
         Button btnReg = findViewById(R.id.btnReg2);
@@ -74,38 +83,52 @@ public class RegisterActivity extends AppCompatActivity {
             String username = txtUsername.getText().toString();
             String password = txtPassword.getText().toString();
             String password2 = txtPassword2.getText().toString();
+            String name = txtName.getText().toString();
+            String surname = txtSurname.getText().toString();
+            String email = txtEmail.getText().toString();
+            String txtAge = intAge.getText().toString();
 
             //Format checking
-            if (username.isEmpty() || password.isEmpty() || password2.isEmpty())
+            if (username.isEmpty() || password.isEmpty() || password2.isEmpty() || name.isEmpty() || surname.isEmpty() || email.isEmpty() || txtAge.isEmpty())
                 Toast.makeText(RegisterActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
             else if (username.length() > 7)
                 Toast.makeText(RegisterActivity.this, "Username must be 7 characters maximum", Toast.LENGTH_SHORT).show();
             else if (!password.equals(password2))
                 Toast.makeText(RegisterActivity.this, "Password does not match!", Toast.LENGTH_SHORT).show();
+            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                Toast.makeText(RegisterActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
             else {
-                //Api post user
-                User user = new User("0", username, password);
-                register(user);
+                try {
+                    int age = Integer.parseInt(txtAge);
+                    //Api post user
+                    User user = new User("0", username, password, name, surname, email, age);
+                    register(user);
+
+                } catch (NumberFormatException ex) {
+                    Toast.makeText(RegisterActivity.this, "Invalid age", Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
+                }
             }
         }
     };
 
     private void register(User user) {
 
-        Call<User> call = authApi.register(user);
-        call.enqueue(new Callback<User>() {
+        Call<Void> call = authApi.register(user);
+        call.enqueue(new Callback<Void>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 switch (response.code()) {
-                    case 201: //TODO: cambiar a 200:
+                    case 201:
                         Intent intent = new Intent(getApplicationContext(), SignedinActivity.class);
-                        intent.putExtra("id", response.body().getId());
-                        intent.putExtra("username", response.body().getUsername());
-                        intent.putExtra("password", response.body().getPassword());
+                        intent.putExtra("username", txtUsername.getText().toString());
                         startActivity(intent);
                         break;
                     case 404:
+                        Toast.makeText(RegisterActivity.this, "Impossible to register", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 405:
                         Toast.makeText(RegisterActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
                         break;
                     default:
@@ -113,10 +136,10 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
                 }
             }
-
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
                 Log.e("Throwable", t.getMessage());
             }
         });

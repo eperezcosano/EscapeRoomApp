@@ -11,6 +11,6 @@ public interface AuthApi {
     Call<User> login(@Body User user);
 
     @POST("auth/register")
-    Call<User> register(@Body User user);
+    Call<Void> register(@Body User user);
 
 }
