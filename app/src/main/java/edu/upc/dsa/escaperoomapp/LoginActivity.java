@@ -102,6 +102,9 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 404:
+                        Toast.makeText(LoginActivity.this, "Incorrect user", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 500:
                         Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
                         break;
                     default:

@@ -35,7 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("TEST", "created");
         //Full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -60,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .addInterceptor(interceptor)
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://my-json-server.typicode.com/eperezcosano/JSON-server/")
+                .baseUrl("http://147.83.7.205:8080/dsaApp/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
