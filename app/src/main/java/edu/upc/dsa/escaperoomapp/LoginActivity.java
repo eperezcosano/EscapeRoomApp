@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                     case 200:
                         Intent intent = new Intent(getApplicationContext(), SignedinActivity.class);
                         intent.putExtra("username", response.body().getUsername());
-                        intent.putExtra("password", response.body().getPassword());
                         startActivity(intent);
                         break;
                     case 404:

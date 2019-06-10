@@ -17,7 +17,7 @@ import edu.upc.dsa.escaperoomapp.models.User;
 
 public class SignedinActivity extends AppCompatActivity {
 
-    private User user;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +36,9 @@ public class SignedinActivity extends AppCompatActivity {
 
         //Get user data
         Intent intent = getIntent();
-        //TODO:cambiar id
-        user = new User( intent.getStringExtra("id"), intent.getStringExtra("username"), intent.getStringExtra("password"));
+        username = intent.getStringExtra("username");
 
-        txtUsername.setText(user.getUsername().concat("!"));
+        txtUsername.setText(username.concat("!"));
 
         Button btnPlay = findViewById(R.id.btnPlay);
         Button btnShop = findViewById(R.id.btnShop);
@@ -91,7 +90,7 @@ public class SignedinActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent inventoryIntent = new Intent(getApplicationContext(), InventoryActivity.class);
-            //getUser info
+            inventoryIntent.putExtra("username", username);
             startActivity(inventoryIntent);
         }
     };
