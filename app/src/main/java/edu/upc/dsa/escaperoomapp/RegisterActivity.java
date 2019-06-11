@@ -113,7 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
     };
 
     private void register(User user) {
-
         Call<Void> call = authApi.register(user);
         call.enqueue(new Callback<Void>() {
             @EverythingIsNonNull

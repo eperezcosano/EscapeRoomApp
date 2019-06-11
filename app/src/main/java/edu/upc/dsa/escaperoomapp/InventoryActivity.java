@@ -1,8 +1,10 @@
 package edu.upc.dsa.escaperoomapp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import edu.upc.dsa.escaperoomapp.models.Inventario;
+import edu.upc.dsa.escaperoomapp.models.ObjTo;
 import edu.upc.dsa.escaperoomapp.models.Objetos;
 import edu.upc.dsa.escaperoomapp.models.Profile;
 import edu.upc.dsa.escaperoomapp.models.Stats;
@@ -43,7 +46,7 @@ public class InventoryActivity extends AppCompatActivity {
     private TextView txtTime;
     private TextView txtGames;
     private TextView txtName;
-
+    private String weaponSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +74,39 @@ public class InventoryActivity extends AppCompatActivity {
         txtGames = findViewById(R.id.txtGames);
         txtName = findViewById(R.id.txtName);
 
+        //Dialog listener
+        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        setWeapon(username, weaponSelected);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //
+                        break;
+                }
+            }
+        };
 
         //Recycle View
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter = new MyAdapter(this, objetosList);
+        recyclerAdapter = new MyAdapter(this, objetosList, new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Objetos objetos) {
+                weaponSelected = objetos.getNombre();
+                AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
+                builder.setMessage("Do you want to set this weapon?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("Cancel", dialogClickListener).show();
+            }
+        });
         recyclerView.setAdapter(recyclerAdapter);
+
+
+
 
         //Api connection
         Gson gson = new GsonBuilder().create();
@@ -209,6 +238,44 @@ public class InventoryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Inventario> call, Throwable t) {
                 dialog.dismiss();
+                Toast.makeText(InventoryActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
+                Log.e("Throwable", t.getMessage());
+            }
+        });
+    }
+
+    private void setWeapon(final String username, String weapon) {
+        Call<Void> call = authApi.setWeapon(username, new ObjTo(weapon));
+        call.enqueue(new Callback<Void>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                switch (response.code()) {
+                    case 201:
+                        Toast.makeText(InventoryActivity.this, "Weapon changed", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        break;
+                    case 404:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "First login", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 500:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Object not found", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 600:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Not function for admin", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Unknown response", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(InventoryActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
                 Log.e("Throwable", t.getMessage());
             }

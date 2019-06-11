@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,12 +18,18 @@ import edu.upc.dsa.escaperoomapp.models.Objetos;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(Objetos objetos);
+    }
+
     private Context context;
     private List<Objetos> objetosList;
+    private OnItemClickListener listener;
 
-    public MyAdapter(Context context, List<Objetos> objetosList) {
+    public MyAdapter(Context context, List<Objetos> objetosList, OnItemClickListener listener) {
         this.context = context;
         this.objetosList = objetosList;
+        this.listener = listener;
     }
 
     public void setObjetosList(List<Objetos> objetosList) {
@@ -45,6 +52,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             switch (tipo) {
                 case "weapon":
                     myViewHolder.type.setText("Arma");
+                    myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            listener.onItemClick(objetosList.get(i));
+                        }
+                    });
+                    break;
+                default:
                     break;
             }
         }
