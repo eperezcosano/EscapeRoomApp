@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,27 +39,54 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int i) {
-        if (objetosList.get(i).getType() != null)
-            myViewHolder.type.setText(objetosList.get(i).getType());
+        if (objetosList.get(i).getType() != null) {
+            String tipo = objetosList.get(i).getType();
+
+            switch (tipo) {
+                case "weapon":
+                    myViewHolder.type.setText("Arma");
+                    break;
+            }
+        }
         else
             myViewHolder.type.setText("Not defined");
-        if (objetosList.get(i).getNombre() != null)
-            myViewHolder.name.setText(objetosList.get(i).getNombre());
+        if (objetosList.get(i).getNombre() != null) {
+            String nombre = objetosList.get(i).getNombre();
+
+            nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1);
+
+            myViewHolder.name.setText(nombre);
+            switch (nombre)
+            {
+                case "Katana":
+                    Picasso.get().load("https://puregaming.es/wp-content/uploads/2019/01/Dw8klLOWkAEhrTX.png").into(myViewHolder.img);
+                    break;
+                case "Fusil":
+                    Picasso.get().load("https://3.bp.blogspot.com/-_7onQnAUhjk/W0Zgdxl1YTI/AAAAAAAADHk/-DUkca9CbAguymTgJ64cY-uen7JTZ88ngCLcBGAs/s1600/THOMPSON.png").into(myViewHolder.img);
+                    break;
+                case "Corredera":
+                    Picasso.get().load("https://fortniteestadisticas.com/assets/img//weapons/double-barrel-shotgun.png").into(myViewHolder.img);
+                    break;
+                default:
+                    Picasso.get().load("https://puregaming.es/wp-content/uploads/2019/01/Dw8klLOWkAEhrTX.png").into(myViewHolder.img);
+                    break;
+            }
+        }
         else
             myViewHolder.name.setText("Not defined");
 
         if (objetosList.get(i).getCoste() != null)
-            myViewHolder.cost.setText(Integer.toString(objetosList.get(i).getCoste()));
+            myViewHolder.cost.setText("Coste : " + Integer.toString(objetosList.get(i).getCoste()));
         else
             myViewHolder.cost.setText("Not defined");
 
-        if (objetosList.get(i).getAtributo() != null)
-            myViewHolder.atribute.setText(objetosList.get(i).getAtributo());
-        else
-            myViewHolder.atribute.setText("Not defined");
+//        if (objetosList.get(i).getAtributo() != null)
+//            myViewHolder.atribute.setText("Info: " + objetosList.get(i).getAtributo());
+//        else
+//            myViewHolder.atribute.setText("Not defined");
 
         if (objetosList.get(i).getAmount() != null)
-            myViewHolder.amount.setText(Integer.toString(objetosList.get(i).getAmount()));
+            myViewHolder.amount.setText("Cantidad: " + Integer.toString(objetosList.get(i).getAmount()));
         else
             myViewHolder.amount.setText("Not defined");
 
@@ -75,16 +105,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private TextView type;
         private TextView name;
         private TextView cost;
-        private TextView atribute;
+        //private TextView atribute;
         private TextView amount;
+        private ImageView img;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             type = itemView.findViewById(R.id.rowType);
             name = itemView.findViewById(R.id.rowName);
             cost = itemView.findViewById(R.id.rowCost);
-            atribute = itemView.findViewById(R.id.rowAtribute);
+            //atribute = itemView.findViewById(R.id.rowAtribute);
             amount = itemView.findViewById(R.id.rowAmount);
+            img = itemView.findViewById(R.id.rowImg);
         }
     }
 }

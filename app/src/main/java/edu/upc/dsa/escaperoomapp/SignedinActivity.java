@@ -81,7 +81,7 @@ public class SignedinActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://147.83.7.205:8080/"));
+                    Uri.parse("http://147.83.7.205:8080/Home.html?username=" + username));
             startActivity(browserIntent);
         }
     };
