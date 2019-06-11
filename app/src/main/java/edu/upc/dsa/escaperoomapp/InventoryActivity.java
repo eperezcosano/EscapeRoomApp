@@ -17,7 +17,9 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
+import edu.upc.dsa.escaperoomapp.models.Inventario;
 import edu.upc.dsa.escaperoomapp.models.Objetos;
+import edu.upc.dsa.escaperoomapp.models.Profile;
 import edu.upc.dsa.escaperoomapp.models.Stats;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -34,14 +36,13 @@ public class InventoryActivity extends AppCompatActivity {
     private AuthApi authApi;
     private String username;
     private TextView txtUsername;
-    private TextView txtCash;
-    private TextView txtHp;
     private RecyclerView recyclerView;
     private MyAdapter recyclerAdapter;
     private List<Objetos> objetosList;
     private TextView txtKilled;
     private TextView txtTime;
     private TextView txtGames;
+    private TextView txtName;
 
 
     @Override
@@ -64,11 +65,12 @@ public class InventoryActivity extends AppCompatActivity {
 
         //Fields
         txtUsername = findViewById(R.id.txtUsername);
-        txtCash = findViewById(R.id.txtCash);
-        txtHp = findViewById(R.id.txtHp);
+        txtUsername.setText(username);
         txtKilled = findViewById(R.id.txtKilled);
         txtTime = findViewById(R.id.txtTime);
         txtGames = findViewById(R.id.txtGames);
+        txtName = findViewById(R.id.txtName);
+
 
         //Recycle View
         recyclerView = findViewById(R.id.recyclerView);
@@ -96,11 +98,9 @@ public class InventoryActivity extends AppCompatActivity {
 
         //Api request
         getStats(username);
-        //getProfile();
-        //getInventory();
     }
 
-    private void getStats(String username) {
+    private void getStats(final String username) {
         Call<Stats> call = authApi.getStats(username);
 
         call.enqueue(new Callback<Stats>() {
@@ -112,6 +112,7 @@ public class InventoryActivity extends AppCompatActivity {
                         txtKilled.setText("Enemies killed: " + response.body().getCurrentEnemiesKilled());
                         txtTime.setText("Time: " + response.body().getCurrentTime());
                         txtGames.setText("Games played: " + response.body().getPlayedGames());
+                        getProfile(username);
                         break;
                     case 404:
                         dialog.dismiss();
@@ -136,7 +137,81 @@ public class InventoryActivity extends AppCompatActivity {
             }
         });
     }
-    private void getProfile() {}
+    private void getProfile(final String username) {
+        Call<Profile> call = authApi.getProfile(username);
+        call.enqueue(new Callback<Profile>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<Profile> call, Response<Profile> response) {
+                switch (response.code()) {
+                    case 201:
+                        txtName.setText(response.body().getName() + " " + response.body().getSurname());
+                        getInventory(username);
+                        break;
+                    case 404:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "First login", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 600:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Not function for admin", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Unknown response", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<Profile> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(InventoryActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
+                Log.e("Throwable", t.getMessage());
+            }
+        });
+    }
 
-    private void getInventory() {}
+    private void getInventory(final String username) {
+        Call<Inventario> call = authApi.getInventory(username);
+        call.enqueue(new Callback<Inventario>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<Inventario> call, Response<Inventario> response) {
+                switch (response.code()) {
+                    case 201:
+                        recyclerAdapter.setObjetosList(response.body().getLista());
+                        dialog.dismiss();
+                        break;
+                    case 404:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "First login", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 500:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Object not found", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 501:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "You can’t buy two same weapons", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 600:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Not function for admin", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        dialog.dismiss();
+                        Toast.makeText(InventoryActivity.this, "Unknown response", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<Inventario> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(InventoryActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
+                Log.e("Throwable", t.getMessage());
+            }
+        });
+    }
 }

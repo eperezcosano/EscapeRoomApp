@@ -2,29 +2,29 @@ package edu.upc.dsa.escaperoomapp.models;
 
 public class Objetos {
 
-    private int id;
+    private Integer id;
     private String type;
-    private String name;
-    private String cost;
-    private String atribute;
-    private String amount;
+    private String nombre;
+    private Integer coste;
+    private String atributo;
+    private Integer amount;
 
     public Objetos() {}
 
-    public Objetos(int id, String type, String name, String cost, String atribute, String amount) {
+    public Objetos(Integer id, String type, String nombre, Integer coste, String atributo, Integer amount) {
         this.id = id;
         this.type = type;
-        this.name = name;
-        this.cost = cost;
-        this.atribute = atribute;
+        this.nombre = nombre;
+        this.coste = coste;
+        this.atributo = atributo;
         this.amount = amount;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -36,35 +36,35 @@ public class Objetos {
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCost() {
-        return cost;
+    public Integer getCoste() {
+        return coste;
     }
 
-    public void setCost(String cost) {
-        this.cost = cost;
+    public void setCoste(Integer coste) {
+        this.coste = coste;
     }
 
-    public String getAtribute() {
-        return atribute;
+    public String getAtributo() {
+        return atributo;
     }
 
-    public void setAtribute(String atribute) {
-        this.atribute = atribute;
+    public void setAtributo(String atributo) {
+        this.atributo = atributo;
     }
 
-    public String getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -73,10 +73,10 @@ public class Objetos {
         return "Objetos{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                ", cost='" + cost + '\'' +
-                ", atribute='" + atribute + '\'' +
-                ", amount='" + amount + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", coste=" + coste +
+                ", atributo='" + atributo + '\'' +
+                ", amount=" + amount +
                 '}';
     }
 }

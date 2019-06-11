@@ -1,5 +1,10 @@
 package edu.upc.dsa.escaperoomapp;
 
+import java.util.List;
+
+import edu.upc.dsa.escaperoomapp.models.Inventario;
+import edu.upc.dsa.escaperoomapp.models.Objetos;
+import edu.upc.dsa.escaperoomapp.models.Profile;
 import edu.upc.dsa.escaperoomapp.models.Stats;
 import edu.upc.dsa.escaperoomapp.models.User;
 import retrofit2.Call;
@@ -18,5 +23,11 @@ public interface AuthApi {
 
     @GET("user/statistics/{username}")
     Call<Stats> getStats(@Path("username") String username);
+
+    @GET("user/profile/{username}")
+    Call<Profile> getProfile(@Path("username") String username);
+
+    @GET("user/inventory/{username}")
+    Call<Inventario> getInventory(@Path("username") String username);
 
 }

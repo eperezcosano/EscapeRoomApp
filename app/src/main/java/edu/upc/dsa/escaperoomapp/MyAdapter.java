@@ -40,22 +40,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             myViewHolder.type.setText(objetosList.get(i).getType());
         else
             myViewHolder.type.setText("Not defined");
-        if (objetosList.get(i).getName() != null)
-            myViewHolder.name.setText(objetosList.get(i).getName());
+        if (objetosList.get(i).getNombre() != null)
+            myViewHolder.name.setText(objetosList.get(i).getNombre());
         else
             myViewHolder.name.setText("Not defined");
-        if (objetosList.get(i).getCost() != null)
-            myViewHolder.cost.setText(objetosList.get(i).getCost());
+
+        if (objetosList.get(i).getCoste() != null)
+            myViewHolder.cost.setText(Integer.toString(objetosList.get(i).getCoste()));
         else
             myViewHolder.cost.setText("Not defined");
-        if (objetosList.get(i).getAtribute() != null)
-            myViewHolder.atribute.setText(objetosList.get(i).getAtribute());
+
+        if (objetosList.get(i).getAtributo() != null)
+            myViewHolder.atribute.setText(objetosList.get(i).getAtributo());
         else
             myViewHolder.atribute.setText("Not defined");
+
         if (objetosList.get(i).getAmount() != null)
-            myViewHolder.amount.setText(objetosList.get(i).getAmount());
+            myViewHolder.amount.setText(Integer.toString(objetosList.get(i).getAmount()));
         else
             myViewHolder.amount.setText("Not defined");
+
     }
 
     @Override
