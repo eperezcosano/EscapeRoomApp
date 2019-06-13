@@ -3,6 +3,7 @@ package edu.upc.dsa.escaperoomapp;
 import java.util.List;
 
 import edu.upc.dsa.escaperoomapp.models.Inventario;
+import edu.upc.dsa.escaperoomapp.models.Map;
 import edu.upc.dsa.escaperoomapp.models.ObjTo;
 import edu.upc.dsa.escaperoomapp.models.Objetos;
 import edu.upc.dsa.escaperoomapp.models.Profile;
@@ -33,5 +34,16 @@ public interface AuthApi {
 
     @POST("user/setWeapon/{username}")
     Call<Void> setWeapon(@Path("username") String username, @Body ObjTo objTo);
+
+    //Android
+    @POST("android")
+    Call<Void> updateUser(@Body User user);
+
+    @GET("android/map/{id}")
+    Call<Map> getMap(@Path("id") int id);
+
+    @POST("android/setinventory")
+    Call<Void> setInventory(@Body Inventario inventario);
+
 
 }

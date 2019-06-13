@@ -8,14 +8,20 @@ public class Stats {
     private String currentTime;
     private int playedGames;
     private String currentWeapon;
+    private String currentShield;
+    private int currentLevel;
+    private int cash;
 
     public Stats() {}
 
-    public Stats(int currentEnemiesKilled, String currentTime, int playedGames, String currentWeapon) {
+    public Stats(int currentEnemiesKilled, String currentTime, int playedGames, String currentWeapon, String currentShield, int currentLevel, int cash) {
         this.currentEnemiesKilled = currentEnemiesKilled;
         this.currentTime = currentTime;
         this.playedGames = playedGames;
         this.currentWeapon = currentWeapon;
+        this.currentShield = currentShield;
+        this.currentLevel = currentLevel;
+        this.cash = cash;
     }
 
     public int getCurrentEnemiesKilled() {
@@ -50,6 +56,30 @@ public class Stats {
         this.currentWeapon = currentWeapon;
     }
 
+    public String getCurrentShield() {
+        return currentShield;
+    }
+
+    public void setCurrentShield(String currentShield) {
+        this.currentShield = currentShield;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public int getCash() {
+        return cash;
+    }
+
+    public void setCash(int cash) {
+        this.cash = cash;
+    }
+
     @Override
     public String toString() {
         return "Stats{" +
@@ -57,6 +87,9 @@ public class Stats {
                 ", currentTime='" + currentTime + '\'' +
                 ", playedGames=" + playedGames +
                 ", currentWeapon='" + currentWeapon + '\'' +
+                ", currentShield='" + currentShield + '\'' +
+                ", currentLevel=" + currentLevel +
+                ", cash=" + cash +
                 '}';
     }
 }

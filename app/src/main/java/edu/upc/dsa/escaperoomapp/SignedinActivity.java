@@ -55,14 +55,16 @@ public class SignedinActivity extends AppCompatActivity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-                    //Continue
-                    //Launch unity
+
+                    Username.getInstance().setUsername(username);
+
+                    Intent intent = new Intent(getApplicationContext(), UnityActivity.class);
+                    startActivity(intent);
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
-                    //New game
-                    //Set player data in mysql to empty
-                    //Launch unity
+                    //Intent intent = new Intent(getApplicationContext(), UnityActivity.class);
+                    //startActivity(intent);
                     break;
             }
         }

@@ -4,14 +4,22 @@ import java.util.List;
 
 public class Inventario {
 
+    private String username;
     private List<Objetos> lista;
-    private String userId;
 
     public Inventario() {}
 
-    public Inventario(List<Objetos> lista, String userId) {
+    public Inventario(String username, List<Objetos> lista) {
+        this.username = username;
         this.lista = lista;
-        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<Objetos> getLista() {
@@ -22,19 +30,11 @@ public class Inventario {
         this.lista = lista;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
         return "Inventario{" +
-                "lista=" + lista +
-                ", userId='" + userId + '\'' +
+                "username='" + username + '\'' +
+                ", lista=" + lista +
                 '}';
     }
 }
