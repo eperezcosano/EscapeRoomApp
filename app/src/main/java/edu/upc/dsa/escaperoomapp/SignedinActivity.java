@@ -13,7 +13,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import edu.upc.dsa.escaperoomapp.models.User;
+import edu.upc.dsa.EscapeRoomUnity.UnityPlayerActivity;
+import edu.upc.dsa.escaperoomapp.models.Stats;
 
 public class SignedinActivity extends AppCompatActivity {
 
@@ -48,6 +49,12 @@ public class SignedinActivity extends AppCompatActivity {
         btnShop.setOnClickListener(listenerBtnShop);
         btnInventory.setOnClickListener(listenerBtnInventory);
 
+        //Singleton
+        Singleton.getInstance().setUsername(username);
+        Singleton.getInstance().requestStats();
+        Singleton.getInstance().requestInventario();
+        Singleton.getInstance().requestMaps();
+
     }
 
     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -55,18 +62,18 @@ public class SignedinActivity extends AppCompatActivity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-
-                    Username.getInstance().setUsername(username);
-
-                    Intent intent = new Intent(getApplicationContext(), UnityActivity.class);
-                    startActivity(intent);
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
-                    //Intent intent = new Intent(getApplicationContext(), UnityActivity.class);
-                    //startActivity(intent);
+                    int playedGames = Singleton.getInstance().getStats().getPlayedGames();
+                    int cash = Singleton.getInstance().getStats().getCash();
+                    Singleton.getInstance().setStats(new Stats(0, "00:00:00", playedGames, "nada", "nada", 200, cash));
+
                     break;
             }
+
+            Intent intent = new Intent(getApplicationContext(), UnityPlayerActivity.class);
+            startActivity(intent);
         }
     };
 

@@ -15,4 +15,5 @@ public class UnityActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), UnityPlayerActivity.class);
             startActivity(intent);
         }
+
 }

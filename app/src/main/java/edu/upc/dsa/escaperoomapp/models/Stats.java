@@ -1,7 +1,5 @@
 package edu.upc.dsa.escaperoomapp.models;
 
-import java.sql.Timestamp;
-
 public class Stats {
 
     private int currentEnemiesKilled;
@@ -9,6 +7,7 @@ public class Stats {
     private int playedGames;
     private String currentWeapon;
     private String currentShield;
+    private int currentLife;
     private int currentLevel;
     private int cash;
 
@@ -80,6 +79,14 @@ public class Stats {
         this.cash = cash;
     }
 
+    public int getCurrentLife() {
+        return currentLife;
+    }
+
+    public void setCurrentLife(int currentLife) {
+        this.currentLife = currentLife;
+    }
+
     @Override
     public String toString() {
         return "Stats{" +
@@ -88,6 +95,7 @@ public class Stats {
                 ", playedGames=" + playedGames +
                 ", currentWeapon='" + currentWeapon + '\'' +
                 ", currentShield='" + currentShield + '\'' +
+                ", currentLife=" + currentLife +
                 ", currentLevel=" + currentLevel +
                 ", cash=" + cash +
                 '}';

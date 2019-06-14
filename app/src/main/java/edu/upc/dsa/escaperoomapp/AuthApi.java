@@ -36,11 +36,11 @@ public interface AuthApi {
     Call<Void> setWeapon(@Path("username") String username, @Body ObjTo objTo);
 
     //Android
-    @POST("android")
-    Call<Void> updateUser(@Body User user);
+    @POST("android/update/{username}")
+    Call<Void> updateStats(@Path("username") String username, @Body Stats stats);
 
-    @GET("android/map/{id}")
-    Call<Map> getMap(@Path("id") int id);
+    @GET("android/maps")
+    Call<List<Map>> getMaps();
 
     @POST("android/setinventory")
     Call<Void> setInventory(@Body Inventario inventario);

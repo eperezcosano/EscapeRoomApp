@@ -59,6 +59,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         }
                     });
                     break;
+                case "pista":
+                    myViewHolder.type.setText("Pista");
+                    break;
+                case "llave":
+                    myViewHolder.type.setText("Llave");
+                    break;
+                case "shield":
+                    myViewHolder.type.setText("Escudo");
+                    break;
                 default:
                     break;
             }
@@ -68,30 +77,48 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         if (objetosList.get(i).getNombre() != null) {
             String nombre = objetosList.get(i).getNombre();
 
-            nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1);
+            //nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1);
 
             myViewHolder.name.setText(nombre);
             switch (nombre)
             {
-                case "Katana":
-                    Picasso.get().load("https://puregaming.es/wp-content/uploads/2019/01/Dw8klLOWkAEhrTX.png").into(myViewHolder.img);
+                case "woodSword":
+                    Picasso.get().load("https://www.sccpre.cat/mypng/detail/70-705224_espada-de-madera-cross.png").into(myViewHolder.img);
                     break;
-                case "Fusil":
-                    Picasso.get().load("https://3.bp.blogspot.com/-_7onQnAUhjk/W0Zgdxl1YTI/AAAAAAAADHk/-DUkca9CbAguymTgJ64cY-uen7JTZ88ngCLcBGAs/s1600/THOMPSON.png").into(myViewHolder.img);
+                case "ironSword":
+                    Picasso.get().load("https://i.pinimg.com/originals/55/40/4a/55404a52fb3359bdeaff4394d7cb81d0.png").into(myViewHolder.img);
                     break;
-                case "Corredera":
-                    Picasso.get().load("https://fortniteestadisticas.com/assets/img//weapons/double-barrel-shotgun.png").into(myViewHolder.img);
+                case "goldSword":
+                    Picasso.get().load("https://vignette.wikia.nocookie.net/horadeaventura/images/7/7f/Espadador.png/revision/latest?cb=20121124030750&path-prefix=es").into(myViewHolder.img);
+                    break;
+                case "pistaB":
+                    Picasso.get().load("https://i.pinimg.com/originals/d3/c8/60/d3c860c48ad9f9bb48346528f74d3f48.png").into(myViewHolder.img);
+                    break;
+                case "pistaY":
+                    Picasso.get().load("https://4.bp.blogspot.com/-w6rNRWPnMFU/UmFae6uZLyI/AAAAAAAABBM/-R1T3m-Pm2I/s640/preguntas.png").into(myViewHolder.img);
+                    break;
+                case "pistaR":
+                    Picasso.get().load("https://pngimage.net/wp-content/uploads/2018/06/interrogantes-png-6.png").into(myViewHolder.img);
+                    break;
+                case "llaveB":
+                    Picasso.get().load("https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/59627072_2381151755270864_7056317532851929088_n.jpg?_nc_cat=111&_nc_ht=scontent-mad1-1.xx&oh=2b3a0a634a078c0fdd3e487fccfac39d&oe=5D5EBFF3").into(myViewHolder.img);
+                    break;
+                case "llaveY":
+                    Picasso.get().load("https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/59904610_2381158021936904_3630824489995993088_n.jpg?_nc_cat=105&_nc_ht=scontent-mad1-1.xx&oh=b09ac4773b91ee855ae246c60469be4e&oe=5D2FAC40").into(myViewHolder.img);
+                    break;
+                case "llaveR":
+                    Picasso.get().load("https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/60104433_2381144115271628_7427805772727189504_n.jpg?_nc_cat=103&_nc_ht=scontent-mad1-1.xx&oh=ea2c6e453da7810df10e08054d6b06f3&oe=5D68709D").into(myViewHolder.img);
                     break;
                 default:
-                    Picasso.get().load("https://puregaming.es/wp-content/uploads/2019/01/Dw8klLOWkAEhrTX.png").into(myViewHolder.img);
+                    Picasso.get().load("https://i.pinimg.com/originals/d3/c8/60/d3c860c48ad9f9bb48346528f74d3f48.png").into(myViewHolder.img);
                     break;
             }
         }
         else
             myViewHolder.name.setText("Not defined");
 
-        if (objetosList.get(i).getCoste() != null)
-            myViewHolder.cost.setText("Coste : " + Integer.toString(objetosList.get(i).getCoste()));
+        if (objetosList.get(i).getAtributo() != null)
+            myViewHolder.cost.setText("Info : " + objetosList.get(i).getAtributo());
         else
             myViewHolder.cost.setText("Not defined");
 
