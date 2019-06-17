@@ -76,11 +76,9 @@ public class Singleton {
             @Override
             public void onResponse(Call<Stats> call, Response<Stats> response) {
 
-                Log.d("TEST", "OK");
                 if (response.isSuccessful())
                 {
                     Singleton.getInstance().setStats(response.body());
-                    Log.d("TEST", Singleton.getInstance().getStats().toString());
                 }
 
 
@@ -88,7 +86,6 @@ public class Singleton {
 
             @Override
             public void onFailure(Call<Stats> call, Throwable t) {
-                Log.d("TEST", "fail");
                 t.printStackTrace();
             }
         });
@@ -156,7 +153,7 @@ public class Singleton {
     }
 
     public Map getMap(int i) {
-        return this.map.get(i);
+        return this.map.get(i - 1);
     }
 
     public void requestMaps() {

@@ -5,7 +5,6 @@ import java.util.List;
 import edu.upc.dsa.escaperoomapp.models.Inventario;
 import edu.upc.dsa.escaperoomapp.models.Map;
 import edu.upc.dsa.escaperoomapp.models.ObjTo;
-import edu.upc.dsa.escaperoomapp.models.Objetos;
 import edu.upc.dsa.escaperoomapp.models.Profile;
 import edu.upc.dsa.escaperoomapp.models.Stats;
 import edu.upc.dsa.escaperoomapp.models.User;

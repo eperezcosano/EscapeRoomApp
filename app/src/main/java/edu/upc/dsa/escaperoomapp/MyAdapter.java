@@ -67,6 +67,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     break;
                 case "shield":
                     myViewHolder.type.setText("Escudo");
+                    myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            listener.onItemClick(objetosList.get(i));
+                        }
+                    });
                     break;
                 default:
                     break;
@@ -108,6 +114,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     break;
                 case "llaveR":
                     Picasso.get().load("https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/60104433_2381144115271628_7427805772727189504_n.jpg?_nc_cat=103&_nc_ht=scontent-mad1-1.xx&oh=ea2c6e453da7810df10e08054d6b06f3&oe=5D68709D").into(myViewHolder.img);
+                    break;
+                case "ironShield":
+                    Picasso.get().load("https://www.armouronline.com/foto/produkty/titulni_397_iron_shield.jpg").into(myViewHolder.img);
+                    break;
+                case "goldShield":
+                    Picasso.get().load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTjp_NQI_rE6W0lb0jMDdJpw9sdvgWzAWS1yD6Qmaz5isubG2d").into(myViewHolder.img);
+                    break;
+                case "woodShield":
+                    Picasso.get().load("https://static.turbosquid.com/Preview/2016/11/25__06_34_55/shield_01.jpgE5C8EC95-DF67-4AEA-A488-77CE8ED30F38Original.jpg").into(myViewHolder.img);
                     break;
                 default:
                     Picasso.get().load("https://i.pinimg.com/originals/d3/c8/60/d3c860c48ad9f9bb48346528f74d3f48.png").into(myViewHolder.img);

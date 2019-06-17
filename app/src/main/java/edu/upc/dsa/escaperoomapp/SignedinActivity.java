@@ -67,8 +67,11 @@ public class SignedinActivity extends AppCompatActivity {
                 case DialogInterface.BUTTON_NEGATIVE:
                     int playedGames = Singleton.getInstance().getStats().getPlayedGames();
                     int cash = Singleton.getInstance().getStats().getCash();
-                    Singleton.getInstance().setStats(new Stats(0, "00:00:00", playedGames, "nada", "nada", 200, cash));
-
+                    String currentWeapon = Singleton.getInstance().getStats().getCurrentWeapon();
+                    String currentShield = Singleton.getInstance().getStats().getCurrentShield();
+                    String recordTime = Singleton.getInstance().getStats().getRecordTime();
+                    Singleton.getInstance().setStats(new Stats(0, "00:00:00", recordTime, playedGames, currentWeapon, currentShield, 200, 1, cash));
+                    Singleton.getInstance().sendStats();
                     break;
             }
 

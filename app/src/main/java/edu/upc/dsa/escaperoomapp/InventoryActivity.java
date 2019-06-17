@@ -46,7 +46,8 @@ public class InventoryActivity extends AppCompatActivity {
     private TextView txtTime;
     private TextView txtGames;
     private TextView txtName;
-    private String weaponSelected;
+    private String selection;
+    private String selectionType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,10 @@ public class InventoryActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        setWeapon(username, weaponSelected);
+                        if (selectionType.equals("weapon"))
+                            setWeapon(username, selection);
+                        else if (selectionType.equals("shield"))
+                            //setShield(username, selection);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -97,9 +101,10 @@ public class InventoryActivity extends AppCompatActivity {
         recyclerAdapter = new MyAdapter(this, objetosList, new MyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Objetos objetos) {
-                weaponSelected = objetos.getNombre();
+                selection = objetos.getNombre();
+                selectionType = objetos.getType();
                 AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
-                builder.setMessage("Do you want to set this weapon?").setPositiveButton("Yes", dialogClickListener)
+                builder.setMessage("Do you want to set this " + selectionType + "?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("Cancel", dialogClickListener).show();
             }
         });
